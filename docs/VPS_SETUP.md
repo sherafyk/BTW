@@ -66,6 +66,7 @@ Access the application in your browser at `http://<VPS_IP>:8000/`.
 ## 5. Set Up Reverse Proxy (Optional)
 
 To expose the service on your domain name and handle TLS, you can use a reverse proxy like Nginx or Traefik. A minimal Nginx configuration might look like:
+For Apache reverse proxy instructions, see [APACHE_SETUP.md](APACHE_SETUP.md).
 
 ```nginx
 server {
