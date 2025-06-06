@@ -1,6 +1,6 @@
 # Deploying AI News Pipeline on a VPS
 
-This guide explains how to run the AI News Pipeline on your own Virtual Private Server (VPS) using Docker Compose. The instructions assume you are using an Ubuntu-based distribution, but they can be adapted to other Linux distributions.
+This guide explains how to run the AI News Pipeline on your own Virtual Private Server (VPS) using Docker Compose. The steps have been verified on **Debian 12 (Bookworm)** and are also compatible with Ubuntu-based distributions and other recent Debian derivatives.
 
 ## 1. Prepare the VPS
 
@@ -12,10 +12,10 @@ This guide explains how to run the AI News Pipeline on your own Virtual Private 
    ```bash
    sudo apt install -y ca-certificates curl gnupg
    sudo install -m 0755 -d /etc/apt/keyrings
-   curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+   curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
    sudo chmod a+r /etc/apt/keyrings/docker.gpg
    echo \
-     "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | \
+     "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian $(. /etc/os-release && echo \"$VERSION_CODENAME\") stable" | \
      sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
    sudo apt update
    sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
