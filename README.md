@@ -16,4 +16,4 @@ Open `http://localhost:8000/` in your browser and submit a news article URL.
 ## Deployment
 
 For instructions on deploying the stack to a VPS using Docker Compose, see [docs/VPS_SETUP.md](docs/VPS_SETUP.md).
-For Apache proxy instructions, see [docs/APACHE_SETUP.md](docs/APACHE_SETUP.md).
+For Apache proxy instructions (including ISPConfig examples), see [docs/APACHE_SETUP.md](docs/APACHE_SETUP.md).

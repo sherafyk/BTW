@@ -40,3 +40,27 @@ sudo a2ensite ainews.conf
 sudo systemctl reload apache2
 ```
 After reloading Apache, requests to `example.com` will be forwarded to the FastAPI service.
+
+## Running from ISPConfig Web Root
+
+If your server is managed by ISPConfig with Apache, you can clone the repository directly inside your web root and run Docker from there:
+
+```bash
+cd /var/www/clients/client0/web1/
+git clone https://github.com/your-org/ai-news-pipeline.git
+cd ai-news-pipeline
+docker compose up --build -d
+```
+
+The command downloads images (if necessary) and starts the services in detached mode.
+
+### Permissions
+
+Depending on your ISPConfig configuration, the files in `/var/www/clients/client0/web1/ai-news-pipeline` should typically be owned by `web1:client0`. If you encounter permission errors, adjust ownership and allow the web user to run Docker:
+
+```bash
+sudo chown -R web1:client0 /var/www/clients/client0/web1/ai-news-pipeline
+sudo usermod -aG docker web1   # log out and back in for this to take effect
+```
+
+Alternatively, run `sudo docker compose` as `root`.
