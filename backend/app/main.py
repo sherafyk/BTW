@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends, BackgroundTasks
+from fastapi import FastAPI, Depends
 from fastapi.staticfiles import StaticFiles
 from sqlalchemy.orm import Session
 
@@ -20,12 +20,12 @@ def get_db():
         db.close()
 
 @app.post("/submit", response_model=schemas.ArticleOut)
-async def submit_article(article: schemas.ArticleCreate, background_tasks: BackgroundTasks, db: Session = Depends(get_db)):
+async def submit_article(article: schemas.ArticleCreate, db: Session = Depends(get_db)):
     db_article = models.article.Article(url=article.url)
     db.add(db_article)
     db.commit()
     db.refresh(db_article)
-    background_tasks.add_task(process_article, db_article.id)
+    process_article.delay(db_article.id)
     return db_article
 
 @app.get("/articles", response_model=list[schemas.ArticleOut])
