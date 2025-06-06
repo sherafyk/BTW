@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>News Pipeline</title>
+</head>
+<body>
+    <h1>Submit Article URL</h1>
+    <input type="text" id="url" placeholder="Article URL" size="50" />
+    <button onclick="submitUrl()">Submit</button>
+    <h2>Articles</h2>
+    <pre id="articles"></pre>
+    <script>
+        async function submitUrl() {
+            const url = document.getElementById('url').value;
+            await fetch('/submit', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({url})
+            });
+            loadArticles();
+        }
+        async function loadArticles() {
+            const res = await fetch('/articles');
+            const data = await res.json();
+            document.getElementById('articles').textContent = JSON.stringify(data, null, 2);
+        }
+        loadArticles();
+    </script>
+</body>
+</html>
