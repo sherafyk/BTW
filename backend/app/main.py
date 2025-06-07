@@ -20,7 +20,14 @@ def get_db():
         db.close()
 
 @app.post("/submit", response_model=schemas.ArticleOut)
-async def submit_article(article: schemas.ArticleCreate, db: Session = Depends(get_db)):
+async def submit_article(
+    article: schemas.ArticleCreate, db: Session = Depends(get_db)
+):
+    # prevent database constraint violations for duplicate URLs
+    existing = db.query(models.article.Article).filter_by(url=article.url).first()
+    if existing:
+        return existing
+
     db_article = models.article.Article(url=article.url)
     db.add(db_article)
     db.commit()
